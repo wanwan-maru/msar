@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhoneカメラ風スクリーンショット</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #preview {
+            width: 100%;
+            max-width: 400px;
+            height: 60vh;
+            background: #222;
+            overflow: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #preview-content {
+            padding: 20px;
+            color: #fff;
+        }
+        .camera-controls {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), #000);
+        }
+        .shutter-button {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #fff 60%, #ccc 65%, #000 70%);
+            border-radius: 50%;
+            border: 3px solid #ccc;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .shutter-button:active {
+            transform: scale(0.95);
+        }
+        .shutter-button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="preview">
+        <div id="preview-content">
+            <h1>テストページ</h1>
+            <p>このページをスクリーンショットできます。</p>
+            <p>ここに任意のコンテンツを追加できます。</p>
+        </div>
+    </div>
+    <div class="camera-controls">
+        <button class="shutter-button" onclick="takeScreenshot()"></button>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        function takeScreenshot() {
+            const preview = document.getElementById('preview');
+            html2canvas(preview).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'screenshot.png';
+                link.click();
+            }).catch(err => {
+                console.error('スクリーンショットの撮影に失敗しました:', err);
+            });
+        }
+    </script>
+</body>
+</html>
